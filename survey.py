@@ -52,6 +52,7 @@ def get_coordinates(place_name):
     
 st.subheader("Click your location on the map")
 map = folium.Map(location=(50.937, 6.9603))
+folium.LayerControl().add_to(map)
 map.add_child(folium.LatLngPopup())
 for index, row in existing_data.iterrows():
     folium.Marker([row["latitude"], row["longitude"]], popup=row["name"]).add_to(map)
@@ -139,10 +140,8 @@ folium.TileLayer(
     show=False,
 ).add_to(map)
 
-
-
-# folium.TileLayer("NASAGIBS Blue Marble",show=False).add_to(map)
-# folium.TileLayer("OpenStreetMap",show=True).add_to(map)
+folium.TileLayer("NASAGIBS Blue Marble",show=False).add_to(map)
+folium.TileLayer("OpenStreetMap",show=False).add_to(map)
 folium.TileLayer(
     "http://tiles.openseamap.org/seamark/{z}/{x}/{y}.png",
     name="OpenSeaMap",
@@ -165,7 +164,7 @@ draw_plugin = folium.plugins.Draw(export=True, edit_options={"edit": True})
 draw_plugin.add_to(map)
 
 # Add layer control to the folium map
-folium.LayerControl().add_to(map)
+
     
 c1,c2 = st.columns([2,1], gap='large')
 with c1:
