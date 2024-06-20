@@ -2,3 +2,6 @@ pandas
 streamlit
 st-pages
 st-gsheets-connection
+streamlit-folium
+shapely
+folium
