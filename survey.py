@@ -94,7 +94,7 @@ with st.form(key="vendor_form"):
         attr="Tiles &copy; Esri &mdash; Source: USGS, Esri, TANA, DeLorme, and NPS",
         name="EsriWorldTerrain",
         max_zoom=13,
-        show=True,
+        show=False,
     ).add_to(map)
 
     folium.TileLayer(
@@ -140,7 +140,7 @@ with st.form(key="vendor_form"):
         name="USGS_TopoMap",
         show=False,
     ).add_to(map)
-    # folium.TileLayer("NASAGIBS Blue Marble").add_to(map)
+    # folium.TileLayer("NASAGIBS Blue Marble",show=False).add_to(map)
     # folium.TileLayer("OpenStreetMap",show=True).add_to(map)
     folium.TileLayer(
         "http://tiles.openseamap.org/seamark/{z}/{x}/{y}.png",
