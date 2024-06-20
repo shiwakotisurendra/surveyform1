@@ -75,6 +75,81 @@ with st.form(key="vendor_form"):
     
     
     folium.plugins.LocateControl().add_to(map)
+    fg = folium.FeatureGroup(name="openseamap", overlay=True, control=True).add_to(m)
+
+    folium.TileLayer("CartoDB dark_matter", show=False).add_to(m)
+
+    folium.TileLayer("CartoDB Voyager", show=False).add_to(m)
+
+    folium.TileLayer(
+        "https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png",
+        max_zoom=18,
+        attr='Map <a href="https://memomaps.de/">memomaps.de</a> <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        name="PublicTransport",
+        show=False,
+    ).add_to(m)
+
+    folium.TileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}",
+        attr="Tiles &copy; Esri &mdash; Source: USGS, Esri, TANA, DeLorme, and NPS",
+        name="EsriWorldTerrain",
+        max_zoom=13,
+        show=True,
+    ).add_to(m)
+
+    folium.TileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}",
+        attr="ESRI NatGeoMap",
+        name="ESRI NatGeoMap",
+        show=False,
+    ).add_to(m)
+
+    folium.TileLayer(
+        "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+        name="OSMTopoMap",
+        attr="Map data © OpenStreetMap contributors",
+        show=False,
+    ).add_to(m)
+
+    folium.TileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        attr="ESRI Imagery",
+        name="ESRI Imagery",
+        show=False,
+    ).add_to(m)
+
+    folium.TileLayer(
+        "https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
+        attr='<a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases" title="CyclOSM - Open Bicycle render">CyclOSM</a> | Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        name="Cyle OSM",
+        show=False,
+    ).add_to(m)
+
+    folium.TileLayer(
+        "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}",
+        max_zoom=20,
+        attr='Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>',
+        name="USGS_Imagery",
+        show=False,
+    ).add_to(m)
+
+    folium.TileLayer(
+        "https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}",
+        max_zoom=20,
+        attr='Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>',
+        name="USGS_TopoMap",
+        show=False,
+    ).add_to(m)
+    # folium.TileLayer("NASAGIBS Blue Marble").add_to(m)
+    # folium.TileLayer("OpenStreetMap",show=True).add_to(m)
+    folium.TileLayer(
+        "http://tiles.openseamap.org/seamark/{z}/{x}/{y}.png",
+        name="OpenSeaMap",
+        attr="Map data © OpenSeaMap contributors",
+    ).add_to(fg)
+
+    # Add layer control to the folium map
+    folium.LayerControl().add_to(m)
     
     # c1,c2 = st.columns([2,1], gap='large')
     # with c1:
