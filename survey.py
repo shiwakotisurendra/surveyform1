@@ -63,7 +63,7 @@ with st.form(key="vendor_form"):
     # Mark mandatory fields
     st.markdown("**required*")
 
-    submit_button = st.form_submit_button(label="Submit Survey Details")
+    submit_button = st.form_submit_button(label="Submit Survey Details", type="primary")
 
     # If the submit button is pressed
     if submit_button:
