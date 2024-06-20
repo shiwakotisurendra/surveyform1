@@ -15,7 +15,7 @@ existing_data = conn.read(worksheet="population", usecols=list(range(18)), ttl=5
 # data = conn.read(spreadsheet=url, usecols=[0, 1])
 existing_data= existing_data.dropna(how='all')
 
-st.dataframe(existing_data)
+# st.dataframe(existing_data)
 # st.markdown(type(existing_data.columns[0]))
 
 address1 = [
@@ -110,3 +110,4 @@ with st.form(key="vendor_form"):
             conn.update(worksheet="population", data=updated_df)
 
             st.success("Survey details successfully submitted!")
+            st.balloons()
