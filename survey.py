@@ -3,6 +3,10 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
+from shapely.geometry import Point
+import requests
+import folium
+from streamlit_folium import st_folium
 
 st.set_page_config(layout='wide')
 st.title("Geoinformation feedback Portal")
@@ -11,12 +15,55 @@ st.title("Geoinformation feedback Portal")
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 
-existing_data = conn.read(worksheet="population", usecols=list(range(18)), ttl=5)
-# data = conn.read(spreadsheet=url, usecols=[0, 1])
-existing_data= existing_data.dropna(how='all')
+@st.cache_data
+def read_data(worksheet):
+    
+    existing_data = conn.read(worksheet=worksheet, usecols=list(range(19)), ttl=5)
+    # data = conn.read(spreadsheet=url, usecols=[0, 1])
+    existing_data= existing_data.dropna(how='all')
 
-# st.dataframe(existing_data)
-# st.markdown(type(existing_data.columns[0]))
+    return existing_data
+
+existing_data=read_data('population')
+# print(existing_data.columns)
+# geomdata = existing_data[existing_data['geometry'].notna()]
+
+@st.cache_data
+def get_pos(lat, lng):
+    return Point(lng, lat)
+
+st.subheader("Click your location on the map")
+map = folium.Map(location=(50.937, 6.9603))
+map.add_child(folium.LatLngPopup())
+for index, row in existing_data.iterrows():
+    folium.Marker([row["latitude"], row["longitude"]], popup=row["name"]).add_to(map)
+
+
+folium.plugins.LocateControl().add_to(map)
+
+# c1,c2 = st.columns([2,1], gap='large')
+# with c1:
+new_map = st_folium(map, width=1500,height=500)
+
+geodata = None
+if new_map.get("last_clicked"):
+    geodata = get_pos(new_map["last_clicked"]["lat"], new_map["last_clicked"]["lng"])
+
+
+# Function to get coordinates
+@st.cache_data
+def get_coordinates(place_name):
+    base_url = "https://nominatim.openstreetmap.org/search"
+    params = {"q": place_name, "format": "json", "limit": 1}
+    response = requests.get(base_url, params=params)
+    if response.status_code == 200:
+        data = response.json()
+        if data:
+            return (float(data[0]["lat"]), float(data[0]["lon"]))
+        else:
+            return None
+    else:
+        return None
 
 address1 = [
     "Welche Fachbereiche der Stadt Kerpen könnten von dem InfoTool zur Klimaanpassung profitieren und dieses auch nutzen?",
@@ -96,7 +143,9 @@ with st.form(key="vendor_form"):
                         "population": population,
                         #"OnboardingDate": onboarding_date.strftime("%Y-%m-%d"),
                         "age": age,
-                        "additional": additional_info
+                        "additional": additional_info,
+                        "latitude": geodata[1],
+                        "longitude": geodata[0],
                     }
                 ]
             )
