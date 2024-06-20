@@ -164,9 +164,9 @@ draw_plugin.add_to(map)
 # Add layer control to the folium map
 folium.LayerControl().add_to(map)
     
-c1,c2 = st.columns([2,1], gap='large')
-with c1:
-    new_map = st_folium(map, width=1500, use_container_width=True)
+c1,c2,c3 = st.columns([0.3,1.5,0.3], gap='large')
+with c2:
+    new_map = st_folium(map, width=1500,height=800,use_container_width=True)
 
 geodata = None
 if new_map.get("last_clicked"):
