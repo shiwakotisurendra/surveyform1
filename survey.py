@@ -193,7 +193,7 @@ with st.form(key="vendor_form"):
         geodata = get_pos(new_map["last_clicked"]["lat"], new_map["last_clicked"]["lng"])
     
     st.subheader("Department*")
-    name = st.text_input(label="answer :")
+    name = st.text_input(label="answer :",autocomplete="answer :")
     address = st.subheader("Q1. Welche Fachbereiche der Stadt Kerpen könnten von dem InfoTool zur Klimaanpassung profitieren und dieses auch nutzen?")#st.selectbox("question1*", options=address1, index=None)
     answer= st.multiselect('answer1 :',["Statistics","Geodata Management","Climate Protection","Environmental Monitoring","Geology"]) #st.text_area(label="answer1")
     address2 = st.subheader("Q2. Welche Abteilung soll der Ansprechpartner für das InfoTool zur Klimaanpassung sein?")#st.selectbox("question2*", options=address1, index=None)
@@ -207,7 +207,7 @@ with st.form(key="vendor_form"):
     st.subheader("Products Offered")
     qualification = st.multiselect("answer6 :",options=qualification1)
     st.subheader("Region/City")
-    country = st.text_input(label="answer7 :") 
+    country = st.text_input(label="answer7 :", autocomplete="answer7 :") 
     st.subheader("Population")
     population = st.number_input(label="answer8 :",min_value=0)
     st.subheader("Years in Business")
