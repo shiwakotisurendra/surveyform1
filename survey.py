@@ -139,8 +139,6 @@ folium.TileLayer(
     name="Bing Satellite map",
     show=False,
 ).add_to(map)
-
-folium.TileLayer("NASAGIBS Blue Marble",show=False).add_to(map)
 folium.TileLayer("OpenStreetMap",show=False).add_to(map)
 folium.TileLayer(
     "http://tiles.openseamap.org/seamark/{z}/{x}/{y}.png",
