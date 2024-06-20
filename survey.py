@@ -49,8 +49,6 @@ def get_coordinates(place_name):
     
 
 
-    
-st.subheader("Click your location on the map")
 map = folium.Map(location=(50.937, 6.9603))
 
 map.add_child(folium.LatLngPopup())
@@ -166,7 +164,8 @@ folium.LayerControl().add_to(map)
     
 c1,c2,c3 = st.columns([0.3,1.5,0.3], gap='large')
 with c2:
-    new_map = st_folium(map, width=1500,height=800,use_container_width=True)
+    st.subheader("Click your location on the map")
+    new_map = st_folium(map, width=1500,height=650,use_container_width=True)
 
 geodata = None
 if new_map.get("last_clicked"):
