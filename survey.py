@@ -166,7 +166,7 @@ folium.LayerControl().add_to(map)
     
 c1,c2 = st.columns([2,1], gap='large')
 with c1:
-    new_map = st_folium(map, width=1500,height=500)
+    new_map = st_folium(map, width=1500,height=500, use_container_width=True)
 
 geodata = None
 if new_map.get("last_clicked"):
