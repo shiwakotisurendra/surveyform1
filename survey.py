@@ -40,7 +40,7 @@ with st.form(key="vendor_form"):
     st.subheader("Department*")
     name = st.text_input(label="answer :")
     address = st.subheader("Q1. Welche Fachbereiche der Stadt Kerpen könnten von dem InfoTool zur Klimaanpassung profitieren und dieses auch nutzen?")#st.selectbox("question1*", options=address1, index=None)
-    answer= st.radio('answer',["Statistics","Geodata Management","Climate Protection","Environmental Monitoring","Geology"])#st.text_area(label="answer1")
+    answer= st.radio('answer1 :',["Statistics","Geodata Management","Climate Protection","Environmental Monitoring","Geology"])#st.text_area(label="answer1")
     address2 = st.subheader("Q2. Welche Abteilung soll der Ansprechpartner für das InfoTool zur Klimaanpassung sein?")#st.selectbox("question2*", options=address1, index=None)
     answer2= st.text_area(label="answer2 :")
     address3 = st.subheader("Q3. Sollte das InfoTool auch für andere Nutzer/Städtepartner zur Verfügung stehen, z.B. Wasser-/Umweltverbände, Bürgerinitiativen, Universitäten und Schulen?") #st.selectbox("question3*", options=address1, index=None)
