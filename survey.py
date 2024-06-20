@@ -119,6 +119,13 @@ with st.form(key="vendor_form"):
     ).add_to(map)
 
     folium.TileLayer(
+        "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
+        attr="ESRI Topographic Map",
+        name="ESRI TopoMap",
+        show=False,
+    ).add_to(map)
+
+    folium.TileLayer(
         "https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
         attr='<a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases" title="CyclOSM - Open Bicycle render">CyclOSM</a> | Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         name="Cyle OSM",
@@ -140,6 +147,17 @@ with st.form(key="vendor_form"):
         name="USGS_TopoMap",
         show=False,
     ).add_to(map)
+
+    folium.TileLayer(
+        "https://t0.tiles.virtualearth.net/tiles/a{q}.jpeg?g=685&mkt=en-us&n=z",
+        max_zoom=20,
+        attr='Bing Satellite Map',
+        name="Bing Satellite map",
+        show=False,
+    ).add_to(map)
+
+
+
     # folium.TileLayer("NASAGIBS Blue Marble",show=False).add_to(map)
     # folium.TileLayer("OpenStreetMap",show=True).add_to(map)
     folium.TileLayer(
