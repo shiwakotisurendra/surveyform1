@@ -46,6 +46,135 @@ def get_coordinates(place_name):
             return None
     else:
         return None
+    
+
+
+    
+st.subheader("Click your location on the map")
+map = folium.Map(location=(50.937, 6.9603))
+map.add_child(folium.LatLngPopup())
+for index, row in existing_data.iterrows():
+    folium.Marker([row["latitude"], row["longitude"]], popup=row["name"]).add_to(map)
+
+
+folium.plugins.LocateControl().add_to(map)
+fg = folium.FeatureGroup(name="openseamap", overlay=True, control=True).add_to(map)
+
+folium.TileLayer("CartoDB dark_matter", show=False).add_to(map)
+
+folium.TileLayer("CartoDB Voyager", show=False).add_to(map)
+
+folium.TileLayer(
+    "https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png",
+    max_zoom=18,
+    attr='Map <a href="https://memomaps.de/">memomaps.de</a> <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    name="PublicTransport",
+    show=False,
+).add_to(map)
+
+folium.TileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}",
+    attr="Tiles &copy; Esri &mdash; Source: USGS, Esri, TANA, DeLorme, and NPS",
+    name="EsriWorldTerrain",
+    max_zoom=13,
+    show=False,
+).add_to(map)
+
+folium.TileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}",
+    attr="ESRI NatGeoMap",
+    name="ESRI NatGeoMap",
+    show=False,
+).add_to(map)
+
+folium.TileLayer(
+    "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+    name="OSMTopoMap",
+    attr="Map data © OpenStreetMap contributors",
+    show=False,
+).add_to(map)
+
+folium.TileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    attr="ESRI Imagery",
+    name="ESRI Imagery",
+    show=False,
+).add_to(map)
+
+folium.TileLayer(
+    "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
+    attr="ESRI Topographic Map",
+    name="ESRI TopoMap",
+    show=False,
+).add_to(map)
+
+folium.TileLayer(
+    "https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
+    attr='<a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases" title="CyclOSM - Open Bicycle render">CyclOSM</a> | Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    name="Cyle OSM",
+    show=False,
+).add_to(map)
+
+folium.TileLayer(
+    "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}",
+    max_zoom=20,
+    attr='Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>',
+    name="USGS_Imagery",
+    show=False,
+).add_to(map)
+
+folium.TileLayer(
+    "https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}",
+    max_zoom=20,
+    attr='Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>',
+    name="USGS_TopoMap",
+    show=False,
+).add_to(map)
+
+folium.TileLayer(
+    "https://t0.tiles.virtualearth.net/tiles/a{q}.jpeg?g=685&mkt=en-us&n=z",
+    max_zoom=20,
+    attr='Bing Satellite Map',
+    name="Bing Satellite map",
+    show=False,
+).add_to(map)
+
+
+
+# folium.TileLayer("NASAGIBS Blue Marble",show=False).add_to(map)
+# folium.TileLayer("OpenStreetMap",show=True).add_to(map)
+folium.TileLayer(
+    "http://tiles.openseamap.org/seamark/{z}/{x}/{y}.png",
+    name="OpenSeaMap",
+    attr="Map data © OpenSeaMap contributors",
+).add_to(fg)
+
+folium.plugins.Fullscreen().add_to(map)
+
+folium.plugins.MeasureControl(
+    position="topright",
+    primary_length_unit="meters",
+    secondary_length_unit="miles",
+    primary_area_unit="sqmeters",
+    secondary_area_unit="acres",
+).add_to(map)
+folium.plugins.MiniMap().add_to(map)
+
+# Enable drawing control
+draw_plugin = folium.plugins.Draw(export=True, edit_options={"edit": True})
+draw_plugin.add_to(map)
+
+# Add layer control to the folium map
+folium.LayerControl().add_to(map)
+    
+c1,c2 = st.columns([2,1], gap='large')
+with c1:
+    new_map = st_folium(map, width=1500,height=500)
+
+geodata = None
+if new_map.get("last_clicked"):
+    geodata = get_pos(new_map["last_clicked"]["lat"], new_map["last_clicked"]["lng"])
+    
 
 address1 = [
     "Welche Fachbereiche der Stadt Kerpen könnten von dem InfoTool zur Klimaanpassung profitieren und dieses auch nutzen?",
@@ -67,131 +196,7 @@ qualification1 = [
 # Onboarding New Vendor Form
 with st.form(key="vendor_form"):
 
-    st.subheader("Click your location on the map")
-    map = folium.Map(location=(50.937, 6.9603))
-    map.add_child(folium.LatLngPopup())
-    for index, row in existing_data.iterrows():
-        folium.Marker([row["latitude"], row["longitude"]], popup=row["name"]).add_to(map)
-    
-    
-    folium.plugins.LocateControl().add_to(map)
-    fg = folium.FeatureGroup(name="openseamap", overlay=True, control=True).add_to(map)
-
-    folium.TileLayer("CartoDB dark_matter", show=False).add_to(map)
-
-    folium.TileLayer("CartoDB Voyager", show=False).add_to(map)
-
-    folium.TileLayer(
-        "https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png",
-        max_zoom=18,
-        attr='Map <a href="https://memomaps.de/">memomaps.de</a> <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        name="PublicTransport",
-        show=False,
-    ).add_to(map)
-
-    folium.TileLayer(
-        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}",
-        attr="Tiles &copy; Esri &mdash; Source: USGS, Esri, TANA, DeLorme, and NPS",
-        name="EsriWorldTerrain",
-        max_zoom=13,
-        show=False,
-    ).add_to(map)
-
-    folium.TileLayer(
-        "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}",
-        attr="ESRI NatGeoMap",
-        name="ESRI NatGeoMap",
-        show=False,
-    ).add_to(map)
-
-    folium.TileLayer(
-        "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
-        name="OSMTopoMap",
-        attr="Map data © OpenStreetMap contributors",
-        show=False,
-    ).add_to(map)
-
-    folium.TileLayer(
-        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-        attr="ESRI Imagery",
-        name="ESRI Imagery",
-        show=False,
-    ).add_to(map)
-
-    folium.TileLayer(
-        "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
-        attr="ESRI Topographic Map",
-        name="ESRI TopoMap",
-        show=False,
-    ).add_to(map)
-
-    folium.TileLayer(
-        "https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
-        attr='<a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases" title="CyclOSM - Open Bicycle render">CyclOSM</a> | Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        name="Cyle OSM",
-        show=False,
-    ).add_to(map)
-
-    folium.TileLayer(
-        "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}",
-        max_zoom=20,
-        attr='Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>',
-        name="USGS_Imagery",
-        show=False,
-    ).add_to(map)
-
-    folium.TileLayer(
-        "https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}",
-        max_zoom=20,
-        attr='Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>',
-        name="USGS_TopoMap",
-        show=False,
-    ).add_to(map)
-
-    folium.TileLayer(
-        "https://t0.tiles.virtualearth.net/tiles/a{q}.jpeg?g=685&mkt=en-us&n=z",
-        max_zoom=20,
-        attr='Bing Satellite Map',
-        name="Bing Satellite map",
-        show=False,
-    ).add_to(map)
-
-
-
-    # folium.TileLayer("NASAGIBS Blue Marble",show=False).add_to(map)
-    # folium.TileLayer("OpenStreetMap",show=True).add_to(map)
-    folium.TileLayer(
-        "http://tiles.openseamap.org/seamark/{z}/{x}/{y}.png",
-        name="OpenSeaMap",
-        attr="Map data © OpenSeaMap contributors",
-    ).add_to(fg)
-
-    folium.plugins.Fullscreen().add_to(map)
-    
-    folium.plugins.MeasureControl(
-        position="topright",
-        primary_length_unit="meters",
-        secondary_length_unit="miles",
-        primary_area_unit="sqmeters",
-        secondary_area_unit="acres",
-    ).add_to(map)
-    folium.plugins.MiniMap().add_to(map)
-
-    # Enable drawing control
-    draw_plugin = folium.plugins.Draw(export=True, edit_options={"edit": True})
-    draw_plugin.add_to(map)
-
-    # Add layer control to the folium map
-    folium.LayerControl().add_to(map)
-    
-    # c1,c2 = st.columns([2,1], gap='large')
-    # with c1:
-    new_map = st_folium(map, width=1500,height=500)
-    
-    geodata = None
-    if new_map.get("last_clicked"):
-        geodata = get_pos(new_map["last_clicked"]["lat"], new_map["last_clicked"]["lng"])
-    
+   
     st.subheader("Department*")
     name = st.text_input(label="answer :",autocomplete="answer :")
     address = st.subheader("Q1. Welche Fachbereiche der Stadt Kerpen könnten von dem InfoTool zur Klimaanpassung profitieren und dieses auch nutzen?")#st.selectbox("question1*", options=address1, index=None)
