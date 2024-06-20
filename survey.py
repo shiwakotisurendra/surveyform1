@@ -52,7 +52,7 @@ def get_coordinates(place_name):
     
 st.subheader("Click your location on the map")
 map = folium.Map(location=(50.937, 6.9603))
-folium.LayerControl().add_to(map)
+
 map.add_child(folium.LatLngPopup())
 for index, row in existing_data.iterrows():
     folium.Marker([row["latitude"], row["longitude"]], popup=row["name"]).add_to(map)
@@ -162,7 +162,7 @@ draw_plugin = folium.plugins.Draw(export=True, edit_options={"edit": True})
 draw_plugin.add_to(map)
 
 # Add layer control to the folium map
-
+folium.LayerControl().add_to(map)
     
 c1,c2 = st.columns([2,1], gap='large')
 with c1:
@@ -192,8 +192,7 @@ qualification1 = [
 
 # Onboarding New Vendor Form
 with st.form(key="vendor_form"):
-
-   
+    
     st.subheader("Department*")
     name = st.text_input(label="answer :",autocomplete="answer :")
     address = st.subheader("Q1. Welche Fachbereiche der Stadt Kerpen könnten von dem InfoTool zur Klimaanpassung profitieren und dieses auch nutzen?")#st.selectbox("question1*", options=address1, index=None)
