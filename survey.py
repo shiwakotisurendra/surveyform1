@@ -148,6 +148,21 @@ with st.form(key="vendor_form"):
         attr="Map data © OpenSeaMap contributors",
     ).add_to(fg)
 
+    folium.plugins.Fullscreen().add_to(map)
+    
+    folium.plugins.MeasureControl(
+        position="topright",
+        primary_length_unit="meters",
+        secondary_length_unit="miles",
+        primary_area_unit="sqmeters",
+        secondary_area_unit="acres",
+    ).add_to(map)
+    folium.plugins.MiniMap().add_to(map)
+
+    # Enable drawing control
+    draw_plugin = folium.plugins.Draw(export=True, edit_options={"edit": True})
+    draw_plugin.add_to(map)
+
     # Add layer control to the folium map
     folium.LayerControl().add_to(map)
     
