@@ -32,24 +32,6 @@ existing_data=read_data('population')
 def get_pos(lat, lng):
     return Point(lng, lat)
 
-st.subheader("Click your location on the map")
-map = folium.Map(location=(50.937, 6.9603))
-map.add_child(folium.LatLngPopup())
-for index, row in existing_data.iterrows():
-    folium.Marker([row["latitude"], row["longitude"]], popup=row["name"]).add_to(map)
-
-
-folium.plugins.LocateControl().add_to(map)
-
-# c1,c2 = st.columns([2,1], gap='large')
-# with c1:
-new_map = st_folium(map, width=1500,height=500)
-
-geodata = None
-if new_map.get("last_clicked"):
-    geodata = get_pos(new_map["last_clicked"]["lat"], new_map["last_clicked"]["lng"])
-
-
 # Function to get coordinates
 @st.cache_data
 def get_coordinates(place_name):
@@ -84,6 +66,24 @@ qualification1 = [
 
 # Onboarding New Vendor Form
 with st.form(key="vendor_form"):
+
+    st.subheader("Click your location on the map")
+    map = folium.Map(location=(50.937, 6.9603))
+    map.add_child(folium.LatLngPopup())
+    for index, row in existing_data.iterrows():
+        folium.Marker([row["latitude"], row["longitude"]], popup=row["name"]).add_to(map)
+    
+    
+    folium.plugins.LocateControl().add_to(map)
+    
+    # c1,c2 = st.columns([2,1], gap='large')
+    # with c1:
+    new_map = st_folium(map, width=1500,height=500)
+    
+    geodata = None
+    if new_map.get("last_clicked"):
+        geodata = get_pos(new_map["last_clicked"]["lat"], new_map["last_clicked"]["lng"])
+    
     st.subheader("Department*")
     name = st.text_input(label="answer :")
     address = st.subheader("Q1. Welche Fachbereiche der Stadt Kerpen könnten von dem InfoTool zur Klimaanpassung profitieren und dieses auch nutzen?")#st.selectbox("question1*", options=address1, index=None)
