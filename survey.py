@@ -162,7 +162,7 @@ draw_plugin.add_to(map)
 # Add layer control to the folium map
 folium.LayerControl().add_to(map)
     
-c1,c2 = st.columns([1.5,0.3], gap='large')
+c1,c2 = st.columns([1,2], gap='large')
 with c1:
     st.subheader("Click your location on the map")
     new_map = st_folium(map, width=1500,height=650,use_container_width=True)
@@ -266,5 +266,5 @@ with c2:
                 # Update Google Sheets with the new vendor data
                 conn.update(worksheet="population", data=updated_df)
     
-st.success("Survey details successfully submitted!")
-st.balloons()
+                st.success("Survey details successfully submitted!")
+                st.balloons()
