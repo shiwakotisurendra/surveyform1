@@ -164,7 +164,7 @@ folium.LayerControl().add_to(map)
     
 c1,c2 = st.columns([0.1,2], gap='large')
 with c1:
-    st.markdown('here)
+    st.markdown('here')
     
 with c2:
     st.subheader("Click your location on the map")
