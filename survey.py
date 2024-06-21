@@ -162,16 +162,17 @@ draw_plugin.add_to(map)
 # Add layer control to the folium map
 folium.LayerControl().add_to(map)
     
-c1,c2 = st.columns([1,2], gap='large')
+c1,c2 = st.columns([0.1,2], gap='large')
 with c1:
+    st.markdown('here)
+    
+with c2:
     st.subheader("Click your location on the map")
     new_map = st_folium(map, width=1500,height=650,use_container_width=True)
 
     geodata = None
     if new_map.get("last_clicked"):
         geodata = get_pos(new_map["last_clicked"]["lat"], new_map["last_clicked"]["lng"])
-    
-with c2:
     address1 = [
         "Welche Fachbereiche der Stadt Kerpen könnten von dem InfoTool zur Klimaanpassung profitieren und dieses auch nutzen?",
         "Welche Abteilung soll der Ansprechpartner für das InfoTool zur Klimaanpassung sein?",
