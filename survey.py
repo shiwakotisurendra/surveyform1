@@ -162,7 +162,7 @@ draw_plugin.add_to(map)
 # Add layer control to the folium map
 folium.LayerControl().add_to(map)
     
-c1,c2 = st.columns([0.1,2], gap='large')
+c1,c2 = st.columns([1,2], gap='large')
 with c1:
     st.markdown('here')
     st.subheader("Click your location on the map")
