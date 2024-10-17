@@ -195,25 +195,35 @@ with c2:
     with st.form(key="vendor_form"):
         
         st.subheader("Department*")
+
         name = st.text_input(label="answer :",autocomplete="answer :")
         address = st.subheader("Q1. Welche Fachbereiche der Stadt Kerpen könnten von dem InfoTool zur Klimaanpassung profitieren und dieses auch nutzen?")#st.selectbox("question1*", options=address1, index=None)
         answer= st.multiselect('answer1 :',["Statistics","Geodata Management","Climate Protection","Environmental Monitoring","Geology"]) #st.text_area(label="answer1")
+
         address2 = st.subheader("Q2. Welche Abteilung soll der Ansprechpartner für das InfoTool zur Klimaanpassung sein?")#st.selectbox("question2*", options=address1, index=None)
         answer2= st.text_area(label="answer2 :")
+
         address3 = st.subheader("Q3. Sollte das InfoTool auch für andere Nutzer/Städtepartner zur Verfügung stehen, z.B. Wasser-/Umweltverbände, Bürgerinitiativen, Universitäten und Schulen?") #st.selectbox("question3*", options=address1, index=None)
         answer3= st.text_area(label="answer3 :")
+
         address4 = st.subheader("Q4.  Was sind Ihrer Meinung nach die größten Herausforderungen/Gefahren in Bezug auf den Klimawandel für die Stadt Kerpen?") #st.selectbox("question4*", options=address1, index=None)
         answer4= st.text_area(label="answer4 :")
+
         address5 = st.subheader("Q5. Welche sind Ihrer Meinung nach die wichtigsten Sektoren, die sich in der Stadt Kerpen mit Klimaanpassung befassen, z.B. Klima-/Umweltabteilungen, Stadtplaner, Wasserwirtschaft, Landwirtschaft, Bergbau, Industrie, Rettungsdienste, usw. ?")#st.selectbox("question5*", options=address1, index=None)
         answer5= st.text_area(label="answer5 :")
+
         st.subheader("Products Offered")
         qualification = st.multiselect("answer6 :",options=qualification1)
+
         st.subheader("Region/City")
         country = st.text_input(label="answer7 :", autocomplete="answer7 :") 
+
         st.subheader("Population")
         population = st.number_input(label="answer8 :",min_value=0)
+
         st.subheader("Years in Business")
         age = st.slider("answer9 :", 0, 50, 5)
+        
         st.subheader("Additional Notes")
         additional_info = st.text_area(label="answer10 :")
     
